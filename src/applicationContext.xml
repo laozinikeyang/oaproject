@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd 
+        http://www.springframework.org/schema/task 
+        http://www.springframework.org/schema/task/spring-task-4.2.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd"
+        
+       >
+	<context:component-scan base-package="service"></context:component-scan>
+	<context:component-scan base-package="standard"></context:component-scan>
+	<bean id="simpleDateFormat" class="java.text.SimpleDateFormat">
+		<constructor-arg value="yyyy-MM-dd" />
+	</bean>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver"></property>
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/myproject?useUnicode=true&amp;characterEncoding=utf-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+
+	</bean>
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		 <property name="configLocation" value="classpath:mybatis-3-config.xml">
+		 </property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+	<bean id="mapperScannerConfigurer"
+		class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="dao"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	<constructor-arg ref="dataSource" />
+	
+	</bean>
+	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"></bean>
+	<bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.Md5CredentialsMatcher"></bean>
+	<bean id="jdbcRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">  
+	     <property name="credentialsMatcher" ref="credentialsMatcher"></property>  
+	     <property name="permissionsLookupEnabled" value="true"></property>  
+	     <property name="dataSource" ref="dataSource"></property>  
+	     <property name="authenticationQuery"  
+	         value="SELECT password FROM sys_login WHERE username = ?"></property>  
+	     <property name="userRolesQuery"  
+	         value="SELECT role_name from sys_login_role slr left join sys_role using(role_id) left join sys_login using(login_id) WHERE slr.username = ?"></property>  
+	     <property name="permissionsQuery"  
+	         value="SELECT permission_name FROM sys_role_permission srp left join sys_role using(role_id) left join sys_permission using(permission_id) WHERE srp.role_name = ?"></property>  
+	 </bean> 
+	 
+	 <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">  
+	     <property name="realm" ref="jdbcRealm"></property>  
+	     <property name="cacheManager" ref="cacheManager"></property>  
+	 </bean> 
+	 <!-- 这里要指定代理spring代理否则shiro controller报错 -->
+	 <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
+        <property name="securityManager" ref="securityManager"/>  
+      </bean>  
+	  <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">  
+	     <!-- Shiro的核心安全接口，这个属性是必须的   -->
+	     <property name="securityManager" ref="securityManager"></property>  
+	     <!-- 要求登录时的链接(登录页面地址)，非必须的属性，默认会自动寻找Web工程根目录下的"/login.jsp"页面 -->  
+	     <property name="loginUrl" value="/login.jsp"></property>  
+	     <!-- 登录成功后要跳转的连接(本例中此属性用不到，因为登录成功后的处理逻辑在LoginController里硬编码) -->  
+	     <property name="successUrl" value="/index.spring" ></property>  
+	     <!-- 用户访问未对其授权的资源时，所显示的连接 -->  
+	     <property name="unauthorizedUrl" value="/"></property>  
+	     <property name="filterChainDefinitions">  
+	         <value>  
+	         /login/verification.spring=anon
+	        /** = authc
+	        
+	             <!-- /index=authc
+	             /question=roles["admin"]
+	             /question/**=roles["admin"] -->
+	         </value>  
+	     </property>  
+	 </bean>
+</beans>

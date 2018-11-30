@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<context id="context1">
+	<commentGenerator>
+        <property name="suppressDate" value="true"/>
+        <property name="suppressAllComments" value="true" />
+    </commentGenerator>
+		<jdbcConnection
+			connectionURL="jdbc:mysql://localhost:3306/myproject"
+			driverClass="com.mysql.jdbc.Driver" password="root" userId="root" />
+		<javaModelGenerator targetPackage="entity"
+			targetProject="myproject" />
+		<sqlMapGenerator targetPackage="dao"
+			targetProject="myproject" />
+		<javaClientGenerator targetPackage="dao"
+			targetProject="myproject" type="XMLMAPPER" />
+		<table tableName="%" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		
+		<!-- 作者：xintingandzhouyang 来源：CSDN 原文：https://blog.csdn.net/xintingandzhouyang/article/details/80599987 
+			版权声明：本文为博主原创文章，转载请附上博文链接！ -->
+	</context>
+	
+</generatorConfiguration>
