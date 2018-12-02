@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.CheckingInMapper">
+  <resultMap id="BaseResultMap" type="entity.CheckingIn">
+    <id column="ckin_id" jdbcType="VARCHAR" property="ckinId" />
+    <result column="ckin_content" jdbcType="VARCHAR" property="ckinContent" />
+    <result column="ckin_times" jdbcType="VARCHAR" property="ckinTimes" />
+    <result column="ckin_date" jdbcType="DATE" property="ckinDate" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ckin_id, ckin_content, ckin_times, ckin_date, username
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from checking_in
+    where ckin_id = #{ckinId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from checking_in
+    where ckin_id = #{ckinId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="entity.CheckingIn">
+    insert into checking_in (ckin_id, ckin_content, ckin_times, 
+      ckin_date, username)
+    values (#{ckinId,jdbcType=VARCHAR}, #{ckinContent,jdbcType=VARCHAR}, #{ckinTimes,jdbcType=VARCHAR}, 
+      #{ckinDate,jdbcType=DATE}, #{username,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.CheckingIn">
+    insert into checking_in
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ckinId != null">
+        ckin_id,
+      </if>
+      <if test="ckinContent != null">
+        ckin_content,
+      </if>
+      <if test="ckinTimes != null">
+        ckin_times,
+      </if>
+      <if test="ckinDate != null">
+        ckin_date,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ckinId != null">
+        #{ckinId,jdbcType=VARCHAR},
+      </if>
+      <if test="ckinContent != null">
+        #{ckinContent,jdbcType=VARCHAR},
+      </if>
+      <if test="ckinTimes != null">
+        #{ckinTimes,jdbcType=VARCHAR},
+      </if>
+      <if test="ckinDate != null">
+        #{ckinDate,jdbcType=DATE},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.CheckingIn">
+    update checking_in
+    <set>
+      <if test="ckinContent != null">
+        ckin_content = #{ckinContent,jdbcType=VARCHAR},
+      </if>
+      <if test="ckinTimes != null">
+        ckin_times = #{ckinTimes,jdbcType=VARCHAR},
+      </if>
+      <if test="ckinDate != null">
+        ckin_date = #{ckinDate,jdbcType=DATE},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ckin_id = #{ckinId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.CheckingIn">
+    update checking_in
+    set ckin_content = #{ckinContent,jdbcType=VARCHAR},
+      ckin_times = #{ckinTimes,jdbcType=VARCHAR},
+      ckin_date = #{ckinDate,jdbcType=DATE},
+      username = #{username,jdbcType=VARCHAR}
+    where ckin_id = #{ckinId,jdbcType=VARCHAR}
+  </update>
+</mapper>

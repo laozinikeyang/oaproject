@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.MemorandumMapper">
+  <resultMap id="BaseResultMap" type="entity.Memorandum">
+    <id column="memo_id" jdbcType="VARCHAR" property="memoId" />
+    <result column="memo_xqzs" jdbcType="TINYINT" property="memoXqzs" />
+    <result column="memo_ylzs" jdbcType="TINYINT" property="memoYlzs" />
+    <result column="memo_title" jdbcType="VARCHAR" property="memoTitle" />
+    <result column="memo_year" jdbcType="CHAR" property="memoYear" />
+    <result column="memo_month" jdbcType="CHAR" property="memoMonth" />
+    <result column="memo_day" jdbcType="CHAR" property="memoDay" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="entity.Memorandum">
+    <result column="memo_content" jdbcType="LONGVARCHAR" property="memoContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    memo_id, memo_xqzs, memo_ylzs, memo_title, memo_year, memo_month, memo_day, username
+  </sql>
+  <sql id="Blob_Column_List">
+    memo_content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from memorandum
+    where memo_id = #{memoId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from memorandum
+    where memo_id = #{memoId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="entity.Memorandum">
+    insert into memorandum (memo_id, memo_xqzs, memo_ylzs, 
+      memo_title, memo_year, memo_month, 
+      memo_day, username, memo_content
+      )
+    values (#{memoId,jdbcType=VARCHAR}, #{memoXqzs,jdbcType=TINYINT}, #{memoYlzs,jdbcType=TINYINT}, 
+      #{memoTitle,jdbcType=VARCHAR}, #{memoYear,jdbcType=CHAR}, #{memoMonth,jdbcType=CHAR}, 
+      #{memoDay,jdbcType=CHAR}, #{username,jdbcType=VARCHAR}, #{memoContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.Memorandum">
+    insert into memorandum
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memoId != null">
+        memo_id,
+      </if>
+      <if test="memoXqzs != null">
+        memo_xqzs,
+      </if>
+      <if test="memoYlzs != null">
+        memo_ylzs,
+      </if>
+      <if test="memoTitle != null">
+        memo_title,
+      </if>
+      <if test="memoYear != null">
+        memo_year,
+      </if>
+      <if test="memoMonth != null">
+        memo_month,
+      </if>
+      <if test="memoDay != null">
+        memo_day,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="memoContent != null">
+        memo_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memoId != null">
+        #{memoId,jdbcType=VARCHAR},
+      </if>
+      <if test="memoXqzs != null">
+        #{memoXqzs,jdbcType=TINYINT},
+      </if>
+      <if test="memoYlzs != null">
+        #{memoYlzs,jdbcType=TINYINT},
+      </if>
+      <if test="memoTitle != null">
+        #{memoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="memoYear != null">
+        #{memoYear,jdbcType=CHAR},
+      </if>
+      <if test="memoMonth != null">
+        #{memoMonth,jdbcType=CHAR},
+      </if>
+      <if test="memoDay != null">
+        #{memoDay,jdbcType=CHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="memoContent != null">
+        #{memoContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.Memorandum">
+    update memorandum
+    <set>
+      <if test="memoXqzs != null">
+        memo_xqzs = #{memoXqzs,jdbcType=TINYINT},
+      </if>
+      <if test="memoYlzs != null">
+        memo_ylzs = #{memoYlzs,jdbcType=TINYINT},
+      </if>
+      <if test="memoTitle != null">
+        memo_title = #{memoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="memoYear != null">
+        memo_year = #{memoYear,jdbcType=CHAR},
+      </if>
+      <if test="memoMonth != null">
+        memo_month = #{memoMonth,jdbcType=CHAR},
+      </if>
+      <if test="memoDay != null">
+        memo_day = #{memoDay,jdbcType=CHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="memoContent != null">
+        memo_content = #{memoContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where memo_id = #{memoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="entity.Memorandum">
+    update memorandum
+    set memo_xqzs = #{memoXqzs,jdbcType=TINYINT},
+      memo_ylzs = #{memoYlzs,jdbcType=TINYINT},
+      memo_title = #{memoTitle,jdbcType=VARCHAR},
+      memo_year = #{memoYear,jdbcType=CHAR},
+      memo_month = #{memoMonth,jdbcType=CHAR},
+      memo_day = #{memoDay,jdbcType=CHAR},
+      username = #{username,jdbcType=VARCHAR},
+      memo_content = #{memoContent,jdbcType=LONGVARCHAR}
+    where memo_id = #{memoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.Memorandum">
+    update memorandum
+    set memo_xqzs = #{memoXqzs,jdbcType=TINYINT},
+      memo_ylzs = #{memoYlzs,jdbcType=TINYINT},
+      memo_title = #{memoTitle,jdbcType=VARCHAR},
+      memo_year = #{memoYear,jdbcType=CHAR},
+      memo_month = #{memoMonth,jdbcType=CHAR},
+      memo_day = #{memoDay,jdbcType=CHAR},
+      username = #{username,jdbcType=VARCHAR}
+    where memo_id = #{memoId,jdbcType=VARCHAR}
+  </update>
+</mapper>

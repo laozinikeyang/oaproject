@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.PlanWorkMapper">
+  <resultMap id="BaseResultMap" type="entity.PlanWork">
+    <id column="plan_id" jdbcType="VARCHAR" property="planId" />
+    <result column="plan_title" jdbcType="VARCHAR" property="planTitle" />
+    <result column="plan_creat" jdbcType="VARCHAR" property="planCreat" />
+    <result column="plan_to" jdbcType="VARCHAR" property="planTo" />
+    <result column="plan_creatime" jdbcType="TIMESTAMP" property="planCreatime" />
+    <result column="plan_updatetime" jdbcType="TIMESTAMP" property="planUpdatetime" />
+    <result column="plan_flag" jdbcType="CHAR" property="planFlag" />
+    <result column="plan_update" jdbcType="VARCHAR" property="planUpdate" />
+    <result column="plan_yxj" jdbcType="INTEGER" property="planYxj" />
+    <result column="plan_fzd" jdbcType="INTEGER" property="planFzd" />
+    <result column="plan_start" jdbcType="TIMESTAMP" property="planStart" />
+    <result column="plan_end" jdbcType="TIMESTAMP" property="planEnd" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="entity.PlanWork">
+    <result column="plan_content" jdbcType="LONGVARCHAR" property="planContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    plan_id, plan_title, plan_creat, plan_to, plan_creatime, plan_updatetime, plan_flag, 
+    plan_update, plan_yxj, plan_fzd, plan_start, plan_end
+  </sql>
+  <sql id="Blob_Column_List">
+    plan_content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from plan_work
+    where plan_id = #{planId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from plan_work
+    where plan_id = #{planId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="entity.PlanWork">
+    insert into plan_work (plan_id, plan_title, plan_creat, 
+      plan_to, plan_creatime, plan_updatetime, 
+      plan_flag, plan_update, plan_yxj, 
+      plan_fzd, plan_start, plan_end, 
+      plan_content)
+    values (#{planId,jdbcType=VARCHAR}, #{planTitle,jdbcType=VARCHAR}, #{planCreat,jdbcType=VARCHAR}, 
+      #{planTo,jdbcType=VARCHAR}, #{planCreatime,jdbcType=TIMESTAMP}, #{planUpdatetime,jdbcType=TIMESTAMP}, 
+      #{planFlag,jdbcType=CHAR}, #{planUpdate,jdbcType=VARCHAR}, #{planYxj,jdbcType=INTEGER}, 
+      #{planFzd,jdbcType=INTEGER}, #{planStart,jdbcType=TIMESTAMP}, #{planEnd,jdbcType=TIMESTAMP}, 
+      #{planContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.PlanWork">
+    insert into plan_work
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="planId != null">
+        plan_id,
+      </if>
+      <if test="planTitle != null">
+        plan_title,
+      </if>
+      <if test="planCreat != null">
+        plan_creat,
+      </if>
+      <if test="planTo != null">
+        plan_to,
+      </if>
+      <if test="planCreatime != null">
+        plan_creatime,
+      </if>
+      <if test="planUpdatetime != null">
+        plan_updatetime,
+      </if>
+      <if test="planFlag != null">
+        plan_flag,
+      </if>
+      <if test="planUpdate != null">
+        plan_update,
+      </if>
+      <if test="planYxj != null">
+        plan_yxj,
+      </if>
+      <if test="planFzd != null">
+        plan_fzd,
+      </if>
+      <if test="planStart != null">
+        plan_start,
+      </if>
+      <if test="planEnd != null">
+        plan_end,
+      </if>
+      <if test="planContent != null">
+        plan_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="planId != null">
+        #{planId,jdbcType=VARCHAR},
+      </if>
+      <if test="planTitle != null">
+        #{planTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="planCreat != null">
+        #{planCreat,jdbcType=VARCHAR},
+      </if>
+      <if test="planTo != null">
+        #{planTo,jdbcType=VARCHAR},
+      </if>
+      <if test="planCreatime != null">
+        #{planCreatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planUpdatetime != null">
+        #{planUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planFlag != null">
+        #{planFlag,jdbcType=CHAR},
+      </if>
+      <if test="planUpdate != null">
+        #{planUpdate,jdbcType=VARCHAR},
+      </if>
+      <if test="planYxj != null">
+        #{planYxj,jdbcType=INTEGER},
+      </if>
+      <if test="planFzd != null">
+        #{planFzd,jdbcType=INTEGER},
+      </if>
+      <if test="planStart != null">
+        #{planStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planEnd != null">
+        #{planEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planContent != null">
+        #{planContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.PlanWork">
+    update plan_work
+    <set>
+      <if test="planTitle != null">
+        plan_title = #{planTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="planCreat != null">
+        plan_creat = #{planCreat,jdbcType=VARCHAR},
+      </if>
+      <if test="planTo != null">
+        plan_to = #{planTo,jdbcType=VARCHAR},
+      </if>
+      <if test="planCreatime != null">
+        plan_creatime = #{planCreatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planUpdatetime != null">
+        plan_updatetime = #{planUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planFlag != null">
+        plan_flag = #{planFlag,jdbcType=CHAR},
+      </if>
+      <if test="planUpdate != null">
+        plan_update = #{planUpdate,jdbcType=VARCHAR},
+      </if>
+      <if test="planYxj != null">
+        plan_yxj = #{planYxj,jdbcType=INTEGER},
+      </if>
+      <if test="planFzd != null">
+        plan_fzd = #{planFzd,jdbcType=INTEGER},
+      </if>
+      <if test="planStart != null">
+        plan_start = #{planStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planEnd != null">
+        plan_end = #{planEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planContent != null">
+        plan_content = #{planContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where plan_id = #{planId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="entity.PlanWork">
+    update plan_work
+    set plan_title = #{planTitle,jdbcType=VARCHAR},
+      plan_creat = #{planCreat,jdbcType=VARCHAR},
+      plan_to = #{planTo,jdbcType=VARCHAR},
+      plan_creatime = #{planCreatime,jdbcType=TIMESTAMP},
+      plan_updatetime = #{planUpdatetime,jdbcType=TIMESTAMP},
+      plan_flag = #{planFlag,jdbcType=CHAR},
+      plan_update = #{planUpdate,jdbcType=VARCHAR},
+      plan_yxj = #{planYxj,jdbcType=INTEGER},
+      plan_fzd = #{planFzd,jdbcType=INTEGER},
+      plan_start = #{planStart,jdbcType=TIMESTAMP},
+      plan_end = #{planEnd,jdbcType=TIMESTAMP},
+      plan_content = #{planContent,jdbcType=LONGVARCHAR}
+    where plan_id = #{planId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.PlanWork">
+    update plan_work
+    set plan_title = #{planTitle,jdbcType=VARCHAR},
+      plan_creat = #{planCreat,jdbcType=VARCHAR},
+      plan_to = #{planTo,jdbcType=VARCHAR},
+      plan_creatime = #{planCreatime,jdbcType=TIMESTAMP},
+      plan_updatetime = #{planUpdatetime,jdbcType=TIMESTAMP},
+      plan_flag = #{planFlag,jdbcType=CHAR},
+      plan_update = #{planUpdate,jdbcType=VARCHAR},
+      plan_yxj = #{planYxj,jdbcType=INTEGER},
+      plan_fzd = #{planFzd,jdbcType=INTEGER},
+      plan_start = #{planStart,jdbcType=TIMESTAMP},
+      plan_end = #{planEnd,jdbcType=TIMESTAMP}
+    where plan_id = #{planId,jdbcType=VARCHAR}
+  </update>
+</mapper>
