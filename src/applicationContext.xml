@@ -92,13 +92,13 @@
 	     <!-- 用户访问未对其授权的资源时，所显示的连接 -->  
 	     <property name="unauthorizedUrl" value="/"></property>  
 	     <property name="filterChainDefinitions">  
-	         <value>  
-	         /login/verification.spring=anon
-	        /** = authc
-	        
-	             <!-- /index=authc
-	             /question=roles["admin"]
-	             /question/**=roles["admin"] -->
+	         <value> 
+	         /bootstrap-3.3.5-dist/**=anon
+	         /calendar/**=anon
+	         /fullcalendar/**=anon
+	         /js/**=anon
+	         /css/**=anon
+	         /**=authc
 	         </value>  
 	     </property>  
 	 </bean>

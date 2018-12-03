@@ -48,5 +48,10 @@
 	
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>  
+	<mvc:resources mapping="/bootstrap-3.3.5-dist/**" location="/bootstrap-3.3.5-dist/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:resources mapping="/calendar/**" location="/calendar/" />
+	<mvc:resources mapping="/fullcalendar/**" location="/fullcalendar/" />
 	
 </beans>
