@@ -93,12 +93,14 @@
 	     <property name="unauthorizedUrl" value="/"></property>  
 	     <property name="filterChainDefinitions">  
 	         <value> 
-	         /bootstrap-3.3.5-dist/**=anon
+	        <!--   /bootstrap-3.3.5-dist/**=anon
 	         /calendar/**=anon
 	         /fullcalendar/**=anon
 	         /js/**=anon
 	         /css/**=anon
-	         /**=authc
+	         /**=authc -->
+	         
+	         /**=anon
 	         </value>  
 	     </property>  
 	 </bean>

@@ -49,7 +49,7 @@ function setStar(parmNum,id,shape){
 
 //表单提交
 function formSubmit(parmId){
-	
+	alert(parmId);
 	$(parmId).submit();
 	
 }
@@ -118,7 +118,7 @@ function goPageHC (flag){
 				dataType:"json",
 				success:function (data){
 					if (data.success){
-						innerContentBody(data);
+						innerContentBodyHC(data);
 					}else{
 						
 					}
@@ -136,7 +136,7 @@ function goPageHC (flag){
 				dataType:"json",
 				success:function (data){
 					if (data.success){
-						innerContentBody(data)
+						innerContentBodyHC(data);
 					}else{
 						
 					}
@@ -147,8 +147,44 @@ function goPageHC (flag){
 		}
 	}	
 }
+function innerContentBodyHC(data){
+	$("#contentBody").empty();
+	var html = "";
+	var planwork = data.data;
+	for (var i=0;i<planwork.length;i++){
+		html +="<tr><td>"
+			 + planwork[i].plan_title
+			 + "</td><td>"
+		     + planwork[i].plan_creatime
+		     + "</td>"
+		if (planwork[i].plan_flag === '1'){
+			html += "<td>待核查</td>"
+		}else{
+			html += "<td>"
+				 + planwork[i].plan_updatetime
+				 + "</td>"
+		}
+		
+		if (planwork[i].plan_flag === '1'){
+			html += "<td>待核查</td>";
+		}else{
+			html +="<td>"
+				 + planwork[i].plan_update
+				 + "</td>"
+		}
+		
+		html +="<td id=\"1207\"><a href=\"javascript:void(0)\" onclick=\"showHC('"+planwork[i].plan_id+"')\"><span class=\"glyphicon glyphicon-th\"></span></a>";
+		html +="<textarea style=\"display: none;\" id=\""+planwork[i].plan_id+"\">"+planwork[i].plan_content+"</textarea></td>"
+		html +="</tr>";
+	}
+	$("#contentBody").html(html);
+	$("#currentPage").html(data.page);
+	
+}
+
 
 //ajax返回的数据插入表格内部
+
 function innerContentBody (data){
 	$("#contentBody").empty();
 	var html = "";
@@ -175,12 +211,13 @@ function innerContentBody (data){
 				 + "</td>"
 		}
 		
-		html +="<td><a href=\"javascript:void(0)\" onclick=\"showMessage('"+planwork[i].plan_id+"')\"><span class=\"glyphicon glyphicon-th\"></span></a>";
+		html +="<td id=\"1207\"><a href=\"javascript:void(0)\" onclick=\"showMessage('"+planwork[i].plan_id+"')\"><span class=\"glyphicon glyphicon-th\"></span></a>";
 		html +="<textarea style=\"display: none;\" id=\""+planwork[i].plan_id+"\">"+planwork[i].plan_content+"</textarea></td>"
 		html +="</tr>";
 	}
 	$("#contentBody").html(html);
 	$("#currentPage").html(data.page);
+	
 }
 
 function showHC (plan_id){

@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.Map;
+
 import entity.SysLogin;
 
 public interface SysLoginMapper {
@@ -14,4 +16,8 @@ public interface SysLoginMapper {
     int updateByPrimaryKeySelective(SysLogin record);
 
     int updateByPrimaryKey(SysLogin record);
+    
+    SysLogin selectByUsername(String username);
+    
+    Map<String,Long> selectByUsernameCount(String username);
 }
